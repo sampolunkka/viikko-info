@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #week-number {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40vh;
+      color: #333;
+      font-family: "Cherry Bomb One", system-ui;
+    }
+  </style>
+</head>
+<body>
+<div id="week-number"></div>
+
+<script>
+  function getWeek(date) {
+    const firstJan = new Date(date.getFullYear(), 0, 1);
+    const days = Math.floor((date - firstJan) / 86400000);
+    return Math.ceil((days + firstJan.getDay() + 1) / 7);
+  }
+
+  function hsl(h, s, l) {
+    return `hsl(${h}, ${s}%, ${l}%)`;
+  }
+
+  const goldenAngle = 137.5; // degrees, great for spacing colors
+
+  const week = getWeek(new Date());
+  const weekDiv = document.getElementById("week-number");
+  weekDiv.textContent = week;
+
+  // Use golden angle multiplication to get base hue:
+  const baseHue = (week * goldenAngle) % 360;
+
+  // Shift second hue by 60 degrees for harmony:
+  const shiftAmount = 60;
+  const secondHue = (baseHue + shiftAmount) % 360;
+
+  // Pastel colors:
+  const saturation = 50;
+  const lightness = 80;
+
+  weekDiv.style.background = `linear-gradient(135deg, ${hsl(baseHue, saturation, lightness)}, ${hsl(secondHue, saturation, lightness)})`;
+</script>
+</body>
+</html>
