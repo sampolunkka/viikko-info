@@ -1,61 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      overflow-x: hidden;
-    }
-    #week-number {
-      height: 100dvh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 40vh;
-      color: #333;
-      font-family: "Cherry Bomb One", system-ui;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+    <style>
+        html {
+            margin: 0;
+            padding: env(safe-area-inset);
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        #week-number {
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40vh;
+            color: #333;
+            font-family: "Cherry Bomb One", system-ui;
+        }
+    </style>
 </head>
 <body>
 <div id="week-number"></div>
 
 <script>
-  function getWeek(date) {
-    const tempDate = new Date(date.getTime());
-    tempDate.setHours(0, 0, 0, 0);
-    // Set to Thursday in current week to determine week number correctly
-    tempDate.setDate(tempDate.getDate() + 3 - ((tempDate.getDay() + 6) % 7));
-    const week1 = new Date(tempDate.getFullYear(), 0, 4);
-    return 1 + Math.round(((tempDate - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
-  }
+    function getWeek(date) {
+        const tempDate = new Date(date.getTime());
+        tempDate.setHours(0, 0, 0, 0);
+        // Set to Thursday in current week to determine week number correctly
+        tempDate.setDate(tempDate.getDate() + 3 - ((tempDate.getDay() + 6) % 7));
+        const week1 = new Date(tempDate.getFullYear(), 0, 4);
+        return 1 + Math.round(((tempDate - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
+    }
 
-  function hsl(h, s, l) {
-    return `hsl(${h}, ${s}%, ${l}%)`;
-  }
+    function hsl(h, s, l) {
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    }
 
-  const goldenAngle = 137.5; // degrees, great for spacing colors
+    const goldenAngle = 137.5; // degrees, great for spacing colors
 
-  const week = getWeek(new Date());
-  const weekDiv = document.getElementById("week-number");
-  weekDiv.textContent = week;
+    const week = getWeek(new Date());
+    const weekDiv = document.getElementById("week-number");
+    weekDiv.textContent = week;
 
-  // Use golden angle multiplication to get base hue:
-  const baseHue = (week * goldenAngle) % 360;
+    // Use golden angle multiplication to get base hue:
+    const baseHue = (week * goldenAngle) % 360;
 
-  // Shift second hue by 60 degrees for harmony:
-  const shiftAmount = 60;
-  const secondHue = (baseHue + shiftAmount) % 360;
+    // Shift second hue by 60 degrees for harmony:
+    const shiftAmount = 60;
+    const secondHue = (baseHue + shiftAmount) % 360;
 
-  // Pastel colors:
-  const saturation = 50;
-  const lightness = 80;
+    // Pastel colors:
+    const saturation = 50;
+    const lightness = 80;
 
-  document.body.style.background = `linear-gradient(135deg, ${hsl(baseHue, saturation, lightness)}, ${hsl(secondHue, saturation, lightness)})`;
+    document.body.style.background = `linear-gradient(135deg, ${hsl(baseHue, saturation, lightness)}, ${hsl(secondHue, saturation, lightness)})`;
 </script>
 </body>
 </html>
