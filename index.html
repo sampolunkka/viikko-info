@@ -24,9 +24,12 @@
 
 <script>
   function getWeek(date) {
-    const firstJan = new Date(date.getFullYear(), 0, 1);
-    const days = Math.floor((date - firstJan) / 86400000);
-    return Math.ceil((days + firstJan.getDay() + 1) / 7);
+    const tempDate = new Date(date.getTime());
+    tempDate.setHours(0, 0, 0, 0);
+    // Set to Thursday in current week to determine week number correctly
+    tempDate.setDate(tempDate.getDate() + 3 - ((tempDate.getDay() + 6) % 7));
+    const week1 = new Date(tempDate.getFullYear(), 0, 4);
+    return 1 + Math.round(((tempDate - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
   }
 
   function hsl(h, s, l) {
